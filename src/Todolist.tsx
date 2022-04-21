@@ -12,6 +12,8 @@ type PropsType = {
     title: string
     tasks: Array<TaskType>
     removeTask:(id:number)=>void
+    setFilter:(filterValue:string)=>void
+
 }
 
 export function Todolist(props: PropsType) {
@@ -43,9 +45,10 @@ export function Todolist(props: PropsType) {
                
             </ul>
             <div>
-                <button>All</button>
-                <button>Active</button>
-                <button>Completed</button>
+                <button onClick={()=>{props.setFilter("All")}}>All</button>
+
+                <button onClick={()=>{props.setFilter("Active")}}>Active</button>
+                <button onClick={()=>{props.setFilter("Completed")}}>Completed</button>
             </div>
 
         </div>
