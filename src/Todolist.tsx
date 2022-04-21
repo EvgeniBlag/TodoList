@@ -1,7 +1,6 @@
-import React from 'react';
-import { Button } from './Button/Button';
-import { Footer } from './Footer/Footer';
-import { Header } from './Header/Header';
+import React, { useState } from 'react';
+import { Header } from './Components/Header/Header';
+
 
 type TaskType = {
     id: number
@@ -12,21 +11,42 @@ type TaskType = {
 type PropsType = {
     title: string
     tasks: Array<TaskType>
+    removeTask:(id:number)=>void
 }
 
 export function Todolist(props: PropsType) {
+
+  
+
     return (
+
         <div>
-            <Header  />
+            <h3>{props.title}</h3>
+            <div>
+            <input />
+            <button>Add</button>
+        </div>
+          
             <ul>
-                <li><input type="checkbox" checked={props.tasks[0].isDone} /> <span>{props.tasks[0].title}</span></li>
-                <li><input type="checkbox" checked={props.tasks[1].isDone} /> <span>{props.tasks[1].title}</span></li>
-                <li><input type="checkbox" checked={props.tasks[2].isDone} /> <span>{props.tasks[2].title}</span></li>
+                {props.tasks.map((el)=>{
+                 return(
+                        <li key={el.id}>
 
-               <Button text={"YOO!!!!!"} />
+                        <input type="checkbox" checked={el.isDone} />
+                         <span>{el.title}</span>
+                         <button onClick={()=>{props.removeTask(el.id)}}>Quit</button>
 
+                        </li>
+                 )
+                })}
+
+               
             </ul>
-
+            <div>
+                <button>All</button>
+                <button>Active</button>
+                <button>Completed</button>
+            </div>
 
         </div>
     )
