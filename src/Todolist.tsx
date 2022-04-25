@@ -3,7 +3,7 @@ import { Header } from './Components/Header/Header';
 
 
 type TaskType = {
-    id: number
+    id: string
     title: string
     isDone: boolean
 }
@@ -11,25 +11,29 @@ type TaskType = {
 type PropsType = {
     title: string
     tasks: Array<TaskType>
-    removeTask:(id:number)=>void
+    removeTask:(id:string)=>void
     changeFilter:(filterValue:string)=>void
-  
-  
-
+    addTask:(title:string)=>void
 }
+
+
 
 export function Todolist(props: PropsType) {
 
-  
+  const [newTaskTitle,setNewTaskTitle]=useState("");
 
     return (
 
         <div>
             <h3>{props.title}</h3>
             <div>
-            <input />
-            <button>Add</button>
-        </div>
+
+            <input value={newTaskTitle} onChange={(e)=>{ setNewTaskTitle( e.currentTarget.value)}} />
+
+                <button onClick={(e) => {
+                    props.addTask(newTaskTitle)
+                    setNewTaskTitle("") }}>Add</button>
+            </div>
           
             <ul>
                 {props.tasks.map((el)=>{
@@ -38,7 +42,7 @@ export function Todolist(props: PropsType) {
 
                         <input type="checkbox" checked={el.isDone} />
                          <span>{el.title}</span>
-                         <button onClick={()=>{props.removeTask(el.id)}}>Quit</button>
+                         <button onClick={(e)=>{props.removeTask(el.id)}}>Quit</button>
 
                         </li>
                  )
@@ -47,9 +51,9 @@ export function Todolist(props: PropsType) {
                
             </ul>
             <div>
-                <button onClick={()=>{props.changeFilter("All")}} >All</button>
-                <button  onClick={()=>{props.changeFilter("Active")}}>Active</button>
-                <button  onClick={()=>{props.changeFilter("Completed")}}>Completed</button>
+                <button onClick={(e)=>{props.changeFilter("All")}} >All</button>
+                <button onClick={(e)=>{props.changeFilter("Active")}} >Active</button>
+                <button onClick={(e)=>{props.changeFilter("Completed")}}  >Completed</button>
             </div>
 
         </div>

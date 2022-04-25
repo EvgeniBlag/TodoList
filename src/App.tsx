@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { v1 } from 'uuid';
 import './App.css';
 import { Header } from './Components/Header/Header';
 import {Todolist} from './Todolist';
@@ -9,40 +10,48 @@ function App() {
 
    const[tasks1,setTasks1]=useState(
         [
-            { id: 1, title: "HTML&CSS", isDone: true },
-            { id: 2, title: "JS", isDone: true },
-            { id: 3, title: "ReactJS", isDone: false }
+            { id: v1(), title: "HTML&CSS", isDone: true },
+            { id: v1(), title: "JS", isDone: true },
+            { id: v1(), title: "ReactJS", isDone: false }
         ]
     )
-    const removeTask=(id:number)=>{
+    const removeTask=(id:string)=>{
       setTasks1(tasks1.filter((el)=>el.id !== id))
     }
 
-    const[filter,setFilter]=useState("All")
+    const addTask = (title:string) =>{
+        let newTask = { id: v1(), title:title, isDone:false};
+        let newTasks = [newTask, ...tasks1];
+        setTasks1(newTasks);
+    }
 
-   let filteredTask = tasks1
+    const [filter,setFilter]=useState("All")
 
-   if(filter==="Active"){
-       filteredTask=tasks1.filter((el)=>!el.isDone)
-   }
+    let filteredTask = tasks1
 
-   if(filter==="Completed"){
-    filteredTask=tasks1.filter((el)=>el.isDone)
-}
+    if(filter==="Active"){
+        filteredTask=tasks1.filter((el)=>!el.isDone)
+    }
+    if(filter==="Completed"){
+        filteredTask=tasks1.filter((el)=>el.isDone)
+    }
 
-   const changeFilter=(filterValue:string)=>{
-       setFilter(filter)
-   }
+
+
+  const changeFilter = (filterValue:string) =>{
+      setFilter(filterValue)
+  }
 
 
     return (
         <div className="App">
-            
-            <Todolist title="What to learn" tasks={filteredTask} removeTask={removeTask}  changeFilter={changeFilter} />
-      
-            
+            <Todolist title="What to learn"
+                tasks={filteredTask}
+                removeTask={removeTask}
+                changeFilter={changeFilter}
+                addTask={addTask} />
         </div>
     );
 }
 
-export default App;
+export default App
