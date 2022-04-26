@@ -19,8 +19,8 @@ function App() {
       setTasks1(tasks1.filter((el)=>el.id !== id))
     }
 
-    const addTask = (title:string) =>{
-        let newTask = { id: v1(), title:title, isDone:false};
+    const addTask = (newTitle:string) =>{
+        let newTask = { id: v1(), title:newTitle, isDone:false};
         let newTasks = [newTask, ...tasks1];
         setTasks1(newTasks);
     }

@@ -13,7 +13,7 @@ type PropsType = {
     tasks: Array<TaskType>
     removeTask:(id:string)=>void
     changeFilter:(filterValue:string)=>void
-    addTask:(title:string)=>void
+    addTask:(newTitle:string)=>void
 }
 
 
@@ -25,17 +25,18 @@ export function Todolist(props: PropsType) {
   const onNewTitleChangeHandler =(e:ChangeEvent<HTMLInputElement>)=>{
       setNewTaskTitle(e.currentTarget.value)
   }
-  const onKeyPrressHandler = (e:KeyboardEvent<HTMLInputElement>) =>{
+
+  const addTaskHandler=()=>{
+      props.addTask(newTaskTitle)
+      setNewTaskTitle("")
+  }
+
+  const onKeyPressHandler = (e:KeyboardEvent<HTMLInputElement>) =>{
       if (e.charCode ===13){
-          props.addTask(newTaskTitle)
-          setNewTaskTitle("")
+        addTaskHandler()
       }
   }
-   const addTask = () =>{
-    
-        props.addTask(newTaskTitle)
-        setNewTaskTitle("") 
-   }
+  
    const onAllClickHandler = () => props.changeFilter("All")
    const onActiveClickHandler = () => props.changeFilter("Active")
    const onCompletedClickHandler = () => props.changeFilter("Completed")
@@ -48,9 +49,9 @@ export function Todolist(props: PropsType) {
             <input
              value={newTaskTitle}
              onChange={onNewTitleChangeHandler}
-             onKeyPress={onKeyPrressHandler}
+             onKeyPress={onKeyPressHandler}
               />
-            <button onClick={addTask}>Add</button>
+            <button onClick={addTaskHandler}>Add</button>
             </div>
           
             <ul>
@@ -59,7 +60,7 @@ export function Todolist(props: PropsType) {
                     const remove = () =>{
                           props.removeTask(el.id)
                     }
-                    
+
                  return(
                         <li key={el.id}>
 
@@ -82,3 +83,5 @@ export function Todolist(props: PropsType) {
         </div>
     )
 }
+
+
