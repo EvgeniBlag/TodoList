@@ -13,7 +13,7 @@ type PropsType = {
     tasks: Array<TaskType>
     removeTask:(id:string)=>void
     changeFilter:(filterValue:string)=>void
-    addTask:(newTitle:string)=>void
+    addTask:(newTaskTitle:string)=>void
 }
 
 
@@ -25,18 +25,18 @@ export function Todolist(props: PropsType) {
   const onNewTitleChangeHandler =(e:ChangeEvent<HTMLInputElement>)=>{
       setNewTaskTitle(e.currentTarget.value)
   }
-
   const addTaskHandler=()=>{
       props.addTask(newTaskTitle)
       setNewTaskTitle("")
   }
-
   const onKeyPressHandler = (e:KeyboardEvent<HTMLInputElement>) =>{
-      if (e.charCode ===13){
+      if (e.key ==="Enter"){
         addTaskHandler()
       }
   }
-  
+  const remove = (elId:string) =>{
+    props.removeTask(elId)
+}
    const onAllClickHandler = () => props.changeFilter("All")
    const onActiveClickHandler = () => props.changeFilter("Active")
    const onCompletedClickHandler = () => props.changeFilter("Completed")
@@ -56,17 +56,12 @@ export function Todolist(props: PropsType) {
           
             <ul>
                 {props.tasks.map((el)=>{
-
-                    const remove = () =>{
-                          props.removeTask(el.id)
-                    }
-
                  return(
                         <li key={el.id}>
 
                         <input type="checkbox" checked={el.isDone} />
                          <span>{el.title}</span>
-                         <button onClick={remove}>Quit</button>
+                         <button onClick={()=>remove(el.id)}>Quit</button>
 
                         </li>
                  )
@@ -75,13 +70,13 @@ export function Todolist(props: PropsType) {
                
             </ul>
             <div>
-                <button onClick={onAllClickHandler}>All</button>
+                <button onClick={onAllClickHandler}>All</button> 
                 <button onClick={onActiveClickHandler}>Active</button>
                 <button onClick={onCompletedClickHandler}>Completed</button>
             </div>
 
         </div>
     )
-}
 
 
+            }
