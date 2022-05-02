@@ -6,7 +6,7 @@ import {Todolist} from './Todolist';
 
 function App() {
 
-   
+
 
    const[tasks1,setTasks1]=useState(
         [
@@ -15,6 +15,18 @@ function App() {
             { id: v1(), title: "ReactJS", isDone: false }
         ]
     )
+
+    const changeStatus = (tasks1Id:string,isDone:boolean) =>{
+          let task = tasks1.find((el)=>el.id === tasks1Id);
+        
+          if(task){
+              task.isDone = isDone;
+          }
+          setTasks1([...tasks1])
+    }
+
+   
+
     const removeTask=(id:string)=>{
       setTasks1(tasks1.filter((el)=>el.id !== id))
     }
@@ -25,31 +37,33 @@ function App() {
         setTasks1(newTasks);
     }
 
-    const [filter,setFilter]=useState("All")
+    const [filter, setFilter] = useState("All")
 
     let filteredTask = tasks1
 
-    if(filter==="Active"){
-        filteredTask=tasks1.filter((el)=>!el.isDone)
+    if (filter === "Active") {
+        filteredTask = tasks1.filter((el) => !el.isDone)
     }
-    if(filter==="Completed"){
-        filteredTask=tasks1.filter((el)=>el.isDone)
+    if (filter === "Completed") {
+        filteredTask = tasks1.filter((el) => el.isDone)
     }
 
-
-
-  const changeFilter = (filterValue:string) =>{
-      setFilter(filterValue)
-  }
+    const changeFilter = (filterValue: string) => {
+        setFilter(filterValue)
+    }
 
 
     return (
         <div className="App">
-            <Todolist title="What to learn"
+            <Todolist
+                title="What to learn"
                 tasks={filteredTask}
                 removeTask={removeTask}
                 changeFilter={changeFilter}
-                addTask={addTask} />
+                addTask={addTask}
+                changeStatus={changeStatus}
+               
+            />
         </div>
     );
 }
