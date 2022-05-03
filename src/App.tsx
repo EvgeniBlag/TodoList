@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { v1 } from 'uuid';
 import './App.css';
-import { Header } from './Components/Header/Header';
+import {Button} from './Components/Button/Button';
 import {Todolist} from './Todolist';
 
 function App() {
@@ -55,6 +55,11 @@ function App() {
 
     return (
         <div className="App">
+
+
+         
+
+
             <Todolist
                 title="What to learn"
                 tasks={filteredTask}
@@ -62,6 +67,7 @@ function App() {
                 changeFilter={changeFilter}
                 addTask={addTask}
                 changeStatus={changeStatus}
+               
                
             />
         </div>
