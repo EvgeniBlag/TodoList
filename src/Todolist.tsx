@@ -1,5 +1,6 @@
 import React, { ChangeEvent, ChangeEventHandler, KeyboardEvent, useState } from 'react';
 import {Button} from './Components/Button/Button';
+import { FullInput } from './Components/FullInput';
 
 
 type TaskType = {
@@ -11,55 +12,59 @@ type TaskType = {
 type PropsType = {
     title: string
     tasks: Array<TaskType>
-    removeTask:(id:string)=>void
     changeFilter:(filterValue:string)=>void
-    addTask:(newTaskTitle:string)=>void
     changeStatus:(tasks1Id:string,isDone:boolean)=>void
-   
-    
+    addTask:(newTaskTitle:string)=>void
+    removeTask:(lId:string)=>void
 }
 
 
 
 export function Todolist(props: PropsType) {
 
-  const [newTaskTitle,setNewTaskTitle]=useState("");
-  const [error,setError]= useState <string | null> (null)
+//   const [newTaskTitle,setNewTaskTitle]=useState("")
+//   const [error,setError]= useState <string | null> (null)
 
-  const onNewTitleChangeHandler =(e:ChangeEvent<HTMLInputElement>)=>{
-      setNewTaskTitle(e.currentTarget.value)
-  }
- const   addTaskHandler = () =>{
-     if (newTaskTitle.trim() !== "") {
-         props.addTask(newTaskTitle.trim());
-         setNewTaskTitle("");
-     }
-     else {
-         setError("Title is required")
-     }
- }
+//   const onNewTitleChangeHandler =(e:ChangeEvent<HTMLInputElement>)=>{
+//       setNewTaskTitle(e.currentTarget.value)
+//   }
+//  const   addTaskHandler = () =>{
+//      if (newTaskTitle.trim() !== "") {
+//          props.addTask(newTaskTitle.trim());
+//          setNewTaskTitle("");
+//      }
+//      else {
+//          setError("Title is required")
+//      }
+//  }
 
   
-  const onKeyPressHandler = (e:KeyboardEvent<HTMLInputElement>) =>{
-      setError(null);
-      if (e.key ==="Enter"){
-        addTaskHandler()
-      }
-  }
-  const remove = (elId:string) =>{
-    props.removeTask(elId)
-}
+//   const onKeyPressHandler = (e:KeyboardEvent<HTMLInputElement>) =>{
+//       setError(null);
+//       if (e.key ==="Enter"){
+//         addTaskHandler()
+//       }
+//   }
+   const remove = (elId:string) =>{
+     props.removeTask(elId)
+
    const onAllClickHandler = () => props.changeFilter("All")
    const onActiveClickHandler = () => props.changeFilter("Active")
    const onCompletedClickHandler = () => props.changeFilter("Completed")
-
+   }
    
 
     return (
 
         <div>
             <h3>{props.title}</h3>
-            <div>
+
+            <FullInput addTask={props.addTask}
+            
+              />
+
+
+            {/* <div>
             <input
              value={newTaskTitle}
              onChange={onNewTitleChangeHandler}
@@ -68,7 +73,7 @@ export function Todolist(props: PropsType) {
               />
             <button onClick={addTaskHandler}>Add</button>
            { error && <div className='error-message'>{error}</div>} 
-            </div>
+            </div> */}
           
             <ul>
                 {props.tasks.map((el)=>{
@@ -98,8 +103,6 @@ export function Todolist(props: PropsType) {
                         </li>
                  )
                 })}
-
-               
             </ul>
             <div>
                  {/* <button onClick={onAllClickHandler}>All</button>
@@ -115,4 +118,4 @@ export function Todolist(props: PropsType) {
     )
 
 
-            }
+   }

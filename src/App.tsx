@@ -56,10 +56,6 @@ function App() {
     return (
         <div className="App">
 
-
-         
-
-
             <Todolist
                 title="What to learn"
                 tasks={filteredTask}
